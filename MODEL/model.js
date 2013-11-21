@@ -34,11 +34,11 @@
        var count = 0;
        // Definimos os pares de imagens
        var pares = [
-             ["/GUI/1.png","/GUI/1.png"],
-             ["/GUI/2.png","/GUI/2.png"],
-             ["/GUI/3.png","/GUI/3.png"],
-             ["/GUI/4.png","/GUI/4.png"],        
-             ["/GUI/5.png","/GUI/5.png"]   
+             ["GUI/1.png","GUI/1.png"],
+             ["GUI/2.png","GUI/2.png"],
+             ["GUI/3.png","GUI/3.png"],
+             ["GUI/4.png","GUI/4.png"],        
+             ["GUI/5.png","GUI/5.png"]   
        ]
 function carta(sx,sy,swidth,sheight, img, info) {
      this.sx = sx;
