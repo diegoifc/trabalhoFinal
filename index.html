@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+       <head>      
+             <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title> Jogo da memória - HTML5</title>
+			<script type="text/javascript" src="DAO/offlinedatabaseJS.js" ></script>
+		 	<script type="text/javascript" src="js/cordova-2.9.0.js" ></script> 
+			<script type="text/javascript" src="MODEL/model.js" ></script>
+			<script type="text/javascript" src="MODEL/funcoes.js" ></script>
+			<link rel="stylesheet" href="js/jquery.mobile-1.3.2.min.css" />
+			<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+			<script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
+			<!--   <script type="text/javascript">
+        $(function() {
+            var sizedWindowWidth = $(window).width() - 50;
+ 
+            $("#jogo").width(sizedWindowWidth);
+            $("#jogo").height(sizedWindowWidth) - 100;
+ 
+           
+        });
+    </script>   -->
+     
+        </head>
+          <body onLoad="carregar();load()"> 
+		  <div data-role="page" id="home" data-inset="false" >
+		  <div data-role="content">
+					 <a href="#jogar" data-role="button" >Jogar</a>
+					 <button>Ranking</button>
+						
+					</div>
+		  </div>
+		  <div data-role="page" id="jogar" data-inset="false" >
+				<div data-role="header" align='center'>
+					<p>Jogo da Memória</p>
+				</div>
+				<div data-role="content">
+					 <canvas id="jogo" width="1000" height="400">
+						Seu browser não tem suporte para o elemento canvas do HTML5
+					</canvas>
+						
+					</div>
+					<div data-role="footer" id="rodape" align='center'>
+						<p>Desenvolvido por: <a href="#aboutDiego" data-rel="dialog" data-transition="slideup">Diego Rocha</a> - CopyLeft</p>
+						<p>Baseado no tutorial de: <a href=http://www.alinebossi.com/2012/12/estudo-de-caso-aplicando-o-html-5-em-um.html>Aline Bossi</a>
+						<p id="info"></p>
+					</div>
+				</div>
+				<div data-role="page" id="aboutDiego" data-add-back-btn='true' data-back-btn-text="Voltar">
+					<div data-role="header" align='center'>
+						<p>Informações sobre o desenvolvedor</p>
+					</div>
+					<div data-role="content">
+						<p>Graduando do curso de Bacharelado em Sistemas de Informação do Instituto Federal Catarinense - Campus Camboriú</p>
+						<p>contato: <a href="mailto:diegoml2008@gmail.com">diegoml2008@gmail.com</a></p>
+						<a href="#home" data-role="button" data-mini="true">Início</a>
+					</div>
+				</div>
+   
+	
+</body>
+</html>
