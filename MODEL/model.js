@@ -107,6 +107,7 @@ function escolha(ev) {
     var my;
     var pick1;
     var pick2;
+	var botao;
     // verificação para que as funções do mouse funcione
     // bem em vários navegadores
     if ( ev.layerX ||  ev.layerX == 0) { // Firefox
@@ -124,7 +125,7 @@ function escolha(ev) {
        if (carta.sx >=0)
              if ((mx>carta.sx)&&(mx<carta.sx+carta.swidth)
           &&(my>carta.sy)&&(my<carta.sy+carta.sheight)) {
-                    //verifica se não queicou duas vezes na mesma carta
+                    //verifica se não clicou duas vezes na mesma carta
                     if ((primeira_foto)|| (i!=primeira_carta)) {
                                   break;
                     }
@@ -142,30 +143,60 @@ function escolha(ev) {
                     if (carta.info==deck[primeira_carta].info) {
                                   combinacao = true;
                                   pontos++;
-                                  contexto.fillStyle= cor_tabela;
-                                  contexto.fillRect(10,340,900,100);
+                                   contexto.fillStyle= 'rgba(0,0,0,0.0)';
+                                  contexto.fillRect(10,340,900,100); 
                                   contexto.fillStyle=cor_carta;
                                   contexto.fillText("Pares encontrados: " + String(pontos), 10, 380);
                                   if (pontos>= .5*deck.length) {
                                                var now = new Date();
                                                var nt = Number(now.getTime());
                                                var seconds = Math.floor(.5+(nt-iniciar_time)/1000);
-                                               contexto.fillStyle= cor_tabela;
-                                               contexto.fillRect(0,0,900,400);
-                                               contexto.fillStyle=cor_carta;
+                                            //  contexto.fillStyle= cor_tabela;
+                                              // contexto.fillRect(0,0,900,400);
+											   var bg = new Image();
+											   bg.src = 'GUI/img/bg01.jpg'; 
+											   bg.onload = function() {
+                                               contexto.drawImage(bg, 0, 0);
+											   contexto.fillStyle=cor_carta;
                                                out = "Parabéns, você encontrou as combinações em "  + String(seconds) + " segundos.";
                                                contexto.fillText(out,10,100);
-                                               contexto.fillText("Recarregue a página e tente novamente para obter melhor tempo!!!",10,300);
-                                               return;
+												var botao = new Image();
+												botao.src = 'GUI/img/botao.png';
+												botao.onload = function() {
+                                               contexto.drawImage(botao, 5, 317, 350, 50);
+											   contexto.fillText("Salvar Pontuação",10,350);}
+											   canvas1.addEventListener('click',salvar,false);
+                                               }; 
+											    return; 
                                     }                
                     }            else {
                                   combinacao = false;
                     }
                     primeira_foto = true;
+					this.removeEventListener('click',arguments.callee,false);
                     tid = setTimeout(vira_carta,1000);
              }
     }
 }
+function salvar(ev) {
+var out;
+   
+    var mx = 0;
+    var my = 0;
+    
+  
+    if ( ev.layerX ||  ev.layerX == 0) { // Firefox
+                    mx= ev.layerX;
+                    my = ev.layerY;
+       } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+                    mx = ev.offsetX;
+                    my = ev.offsetY;
+       }
+	 if (mx>=10 && mx <=240) {
+		alert('local certo');
+	 }
+}
+
 
 function vira_carta() {
     var card;
@@ -188,18 +219,27 @@ function vira_carta() {
              deck[segunda_carta].sx = -1;
              deck[primeira_carta].sx = -1;
     }
+	 canvas1.addEventListener('click',escolha,false);
 }
 
 function carregar(){
+		var bg = new Image();
+		
         contexto = document.getElementById('jogo').getContext('2d');
+		bg.src = 'GUI/img/bg01.jpg'; 
+		bg.onload = function() {
+				contexto.drawImage(bg, 0, 0);
+			
+		
+		
         contexto.fillStyle=cor_tabela;
         contexto.fillRect(0, 0, this.jogo_width, this.jogo_height);
         canvas1 = document.getElementById('jogo');
         canvas1.addEventListener('click',escolha,false);
         formar_cartas();
         embaralhar();            contexto.font="bold 20pt sans-serif";
-        contexto.fillText("Escolha duas cartas e faça combinações",10,30);
+		contexto.fillText("Escolha duas cartas e faça combinações",10,30);
         contexto.fillText("Pares encontrados: 0",10,380); 
         iniciar_time = new Date();
-        iniciar_time = Number(iniciar_time.getTime());
+        iniciar_time = Number(iniciar_time.getTime());};
     }

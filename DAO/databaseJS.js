@@ -9,7 +9,7 @@ function onInit(){
         }
         else {
             initDB();
-            createTables();
+	        createTables();
 
         }
     } 
@@ -25,19 +25,19 @@ function onInit(){
 }
 
 function initDB(){
-    var shortName = 'stuffDB';
+    var shortName = 'memobank';
     var version = '1.0';
-    var displayName = 'MyStuffDB';
+    var displayName = 'MeuBanco';
     var maxSize = 65536; // Em bytes
     localDB = window.openDatabase(shortName, version, displayName, maxSize);
 }
 
 function deleteTables(){
-    var query = 'DROP TABLE IF EXISTS vilourenco;';
+    var query = 'DROP TABLE IF EXISTS ranking;';
     try {
         localDB.transaction(function(transaction){
             transaction.executeSql(query, [], nullDataHandler, errorHandler);
-            alert("Tabela 'webapp' status: Deletada.");
+            alert("Tabela 'ranking' status: Deletada.");
         });
     } 
     catch (e) {
@@ -46,15 +46,15 @@ function deleteTables(){
     }
 }
 function createTables(){
-    var query = 'CREATE TABLE IF NOT EXISTS webapp(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL, preco VARCHAR NOT NULL, categoria VARCHAR NOT NULL);';
+    var query = 'CREATE TABLE IF NOT EXISTS ranking(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL, pontos VARCHAR NOT NULL, foto VARCHAR NOT NULL);';
     try {
         localDB.transaction(function(transaction){
-            transaction.executeSql(query, [], nullDataHandler, errorHandler);
-          //  alert("Tabela 'webapp' status: OK.");
+            transaction.executeSql(query, [], this.nullDataHandler, this.errorHandler);
+          
         });
     } 
     catch (e) {
-        alert("Erro: Data base 'webapp' não criada " + e + ".");
+        alert("Erro: Data base 'ranking' não criada " + e + ".");
         return;
     }
 }

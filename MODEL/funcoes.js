@@ -30,12 +30,7 @@ function meuDispositivo(){
 	}
 	
 	this.listarDados=function(){
-		var element = document.getElementById('testando');
-			 element.innerHTML = 	'Nome do Dispositivo: ' +   this.nome     	+ '<br />' + 
-									'UUID Dispositivo: ' 	+ 	this.uuid 		+ '<br />' + 
-									'Versão do Cordova: '  	+ 	this.cordova  	+ '<br />';
-	
-		
+			
 		var info = document.getElementById('info');
 			info.innerHTML = 'Acessando via: '  +  this.rede + " no Sistema Operacional  " + this.plataforma + " " + this.version;
 	}
