@@ -2,17 +2,21 @@
 	 var jogo_width;
 	 var jogo_height;
 	 $(function() {
-            var sizedWindowWidth = $(window).width() - 50;
-			var sizedWindowHeight =  $(window).height;
+	
+			
+            var sizedWindowWidth = $(window).width() - 20;
+			var sizedWindowHeight =  $(window).height();
+			
 			if (sizedWindowWidth < 1000){ 
-         this.jogo_width =  $("#jogo").width(sizedWindowWidth);
-          this.jogo_height = $("#jogo").height(sizedWindowWidth/1.5);
+         jogo_width =  sizedWindowWidth;
+          jogo_height = sizedWindowWidth/1.5;
 	}
            else {
-			this.jogo_width =   $("#jogo").width(1000);
-			this.jogo_height =   $("#jogo").height(400);
+			jogo_width =    1000;
+			jogo_height =   400;
 		   }
-        });
+		
+		});
             
        //variável que receberá o contexto 2d
        var contexto;      
@@ -57,20 +61,21 @@ function carta(sx,sy,swidth,sheight, img, info) {
      this.info = info; //info será usada no array na formação das cartas
      this.img = img;
      this.draw = desenha_verso;
-	
+
 }
 function desenha_verso() {
 	   contexto.fillStyle = cor_carta;
        contexto.fillRect(this.sx,this.sy,this.swidth,this.sheight);
+
 }
 
 
 function formar_cartas() {
-		carta_width = $("#jogo").width()*0.1;
-		carta_height = $("#jogo").width()*0.13;
-		firstsx = ($("#jogo").width()*0.04);
-		firstsy = $("#jogo").width()*0.06;
-		margin = $("#jogo").width()*0.03;
+		carta_width = jogo_width*0.1;
+		carta_height = jogo_width*0.13;
+		firstsx = jogo_width*0.04;
+		firstsy = jogo_width*0.06;
+		margin = jogo_width*0.04;
 		
 	          var i; // variável para o for            
               var carta_a; // variável para armazenar a primeira carta
@@ -84,8 +89,8 @@ function formar_cartas() {
                            figura_a = new Image();
                            figura_a.src = pares[i][0];
                            carta_a = new carta(cx,cy, carta_width, carta_height, figura_a, i);
-						   deck.push(carta_a);
-                           figura_b = new Image();
+						  deck.push(carta_a);
+						   figura_b = new Image();
                            figura_b.src = pares[i][1];            
 						   carta_b= new  carta(cx, cy+carta_height+margin, carta_width, carta_height, figura_b, i);
                            deck.push(carta_b);
@@ -135,13 +140,14 @@ function escolha(ev) {
                     my = ev.offsetY;
 					
        }
+	   
 	    var i;
     for (i=0;i<deck.length;i++){
              var carta = deck[i];
              //verifica se o usuário clica em espaços vazios,
         // onde as cartas já foram removidas
        if (carta.sx >=0)
-             if ((mx>carta.sx)&&(mx<carta.sx+carta.swidth)
+			if ((mx>carta.sx)&&(mx<carta.sx+carta.swidth)
           &&(my>carta.sy)&&(my<carta.sy+carta.sheight)) {
                     //verifica se não clicou duas vezes na mesma carta
                     if ((primeira_foto)|| (i!=primeira_carta)) {
@@ -245,18 +251,20 @@ function vira_carta() {
 
 function carregar(){
 		var bg = new Image();
-		
+		 canvas1 = document.getElementById('jogo');
+		 
+		canvas1.width = jogo_width;
+		canvas1.height= jogo_height;
         contexto = document.getElementById('jogo').getContext('2d');
 		bg.src = 'GUI/img/bg01.jpg'; 
 		bg.onload = function() {
-				contexto.drawImage(bg, 0, 0);
+				contexto.drawImage(bg, 0, 0,jogo_width,jogo_height);
 			
 		
 		
-        contexto.fillStyle=cor_tabela;
-        contexto.fillRect(0, 0, this.jogo_width, this.jogo_height);
-        canvas1 = document.getElementById('jogo');
-        canvas1.addEventListener('click',escolha,false);
+        
+       
+		canvas1.addEventListener('click',escolha,false);
         formar_cartas();
         embaralhar();            contexto.font="bold 20pt sans-serif";
 		contexto.fillText("Escolha duas cartas e faça combinações",30,30);

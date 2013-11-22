@@ -32,7 +32,7 @@ function meuDispositivo(){
 	this.listarDados=function(){
 			
 		var info = document.getElementById('info');
-			info.innerHTML = 'Acessando via: '  +  this.rede + " no Sistema Operacional  " + this.plataforma + " " + this.version;
+			info.innerHTML = 'Acesso via: '  +  this.rede + " no " + this.plataforma + " " + this.version;
 	}
 	}
 	function load(){
