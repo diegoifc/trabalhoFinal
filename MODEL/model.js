@@ -164,7 +164,7 @@ function escolha(ev) {
 												botao.src = 'GUI/img/botao.png';
 												botao.onload = function() {
                                                contexto.drawImage(botao, 5, 317, 350, 50);
-											   contexto.fillText("Salvar Pontuação",10,350);}
+											   contexto.fillText("Salvar Pontuação",70,350);}
 											   canvas1.addEventListener('click',salvar,false);
                                                }; 
 											    return; 
@@ -192,8 +192,8 @@ var out;
                     mx = ev.offsetX;
                     my = ev.offsetY;
        }
-	 if (mx>=10 && mx <=240) {
-		alert('local certo');
+	 if (mx>=5 && mx <=350) {
+		$.mobile.changePage('#salvar', {transition: 'pop', role: 'dialog'});
 	 }
 }
 
@@ -233,7 +233,7 @@ function carregar(){
 		
 		
         contexto.fillStyle=cor_tabela;
-        contexto.fillRect(0, 0, this.jogo_width, this.jogo_height);
+        contexto.fillRect(0, 0, this.jogo_width-100, this.jogo_height-100);
         canvas1 = document.getElementById('jogo');
         canvas1.addEventListener('click',escolha,false);
         formar_cartas();
