@@ -1,11 +1,19 @@
 //variáveis para definir o tamanho da tag canvas
-	
+	 var jogo_width;
+	 var jogo_height;
+	 $(function() {
+            var sizedWindowWidth = $(window).width() - 50;
+			var sizedWindowHeight =  $(window).height;
+			if (sizedWindowWidth < 1000){ 
+         this.jogo_width =  $("#jogo").width(sizedWindowWidth);
+          this.jogo_height = $("#jogo").height(sizedWindowWidth/1.5);
+	}
+           else {
+			this.jogo_width =   $("#jogo").width(1000);
+			this.jogo_height =   $("#jogo").height(400);
+		   }
+        });
             
-		
-		
-	  var jogo_width = 1000;
-           
-       var jogo_height = 400;
        //variável que receberá o contexto 2d
        var contexto;      
        var primeira_foto = true;
@@ -19,15 +27,16 @@
        var cor_tabela = "rgb(51,51,51)";
        var deck = [];
        //variável que contém a posição x da primeira carta
-       var firstsx = 30;
+       var firstsx ;
        //variável que contém a posição y da primeira carta
-       var firstsy = 50;  
+       var firstsy;
        // Define a distancia entre as cartas
-       var margin = 30;
+       var margin;
        // Define o tamanho da carta
 	   var pontos = 0;
-       var carta_width = 80;
-       var carta_height = 100;   
+       var carta_width;
+	   var carta_height;
+	   
        var tid;
        var matched;
        var iniciar_time;
@@ -38,7 +47,7 @@
              ["GUI/2.png","GUI/2.png"],
              ["GUI/3.png","GUI/3.png"],
              ["GUI/4.png","GUI/4.png"],        
-             ["GUI/5.png","GUI/5.png"]   
+             ["GUI/5.png","GUI/5.png"]
        ]
 function carta(sx,sy,swidth,sheight, img, info) {
      this.sx = sx;
@@ -48,29 +57,37 @@ function carta(sx,sy,swidth,sheight, img, info) {
      this.info = info; //info será usada no array na formação das cartas
      this.img = img;
      this.draw = desenha_verso;
+	
 }
 function desenha_verso() {
-       contexto.fillStyle = cor_carta;
+	   contexto.fillStyle = cor_carta;
        contexto.fillRect(this.sx,this.sy,this.swidth,this.sheight);
 }
 
 
 function formar_cartas() {
-                     var i; // variável para o for            
+		carta_width = $("#jogo").width()*0.1;
+		carta_height = $("#jogo").width()*0.13;
+		firstsx = ($("#jogo").width()*0.04);
+		firstsy = $("#jogo").width()*0.06;
+		margin = $("#jogo").width()*0.03;
+		
+	          var i; // variável para o for            
               var carta_a; // variável para armazenar a primeira carta
               var carta_b; // variável para armazenar a segunda carta
               var figura_a;       // variável para armazenar a primeira imagem                 
               var figura_b; // variável para armazenar a segunda imagem do par
               var cx = firstsx;
+			  
               var cy = firstsy;
               for(i=0;i<pares.length;i++) {
                            figura_a = new Image();
                            figura_a.src = pares[i][0];
                            carta_a = new carta(cx,cy, carta_width, carta_height, figura_a, i);
-                           deck.push(carta_a);
+						   deck.push(carta_a);
                            figura_b = new Image();
                            figura_b.src = pares[i][1];            
-						carta_b= new  carta(cx, cy+carta_height+margin, carta_width, carta_height, figura_b, i);
+						   carta_b= new  carta(cx, cy+carta_height+margin, carta_width, carta_height, figura_b, i);
                            deck.push(carta_b);
                            cx = cx+carta_width+ margin;
                            carta_a.draw();
@@ -116,8 +133,9 @@ function escolha(ev) {
        } else if (ev.offsetX || ev.offsetX == 0) { // Opera
                     mx = ev.offsetX;
                     my = ev.offsetY;
+					
        }
-    var i;
+	    var i;
     for (i=0;i<deck.length;i++){
              var carta = deck[i];
              //verifica se o usuário clica em espaços vazios,
@@ -206,7 +224,10 @@ function vira_carta() {
     if (!combinacao) {
              deck[primeira_carta].draw();
              deck[segunda_carta].draw();
+			 
     } else {
+	
+	
              contexto.fillStyle = cor_tabela;
              contexto.fillRect(deck[segunda_carta].sx,
                           deck[segunda_carta].sy,
@@ -233,12 +254,12 @@ function carregar(){
 		
 		
         contexto.fillStyle=cor_tabela;
-        contexto.fillRect(0, 0, this.jogo_width-100, this.jogo_height-100);
+        contexto.fillRect(0, 0, this.jogo_width, this.jogo_height);
         canvas1 = document.getElementById('jogo');
         canvas1.addEventListener('click',escolha,false);
         formar_cartas();
         embaralhar();            contexto.font="bold 20pt sans-serif";
-		contexto.fillText("Escolha duas cartas e faça combinações",10,30);
+		contexto.fillText("Escolha duas cartas e faça combinações",30,30);
         contexto.fillText("Pares encontrados: 0",10,380); 
         iniciar_time = new Date();
         iniciar_time = Number(iniciar_time.getTime());};
