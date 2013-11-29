@@ -26,9 +26,9 @@
 				if (status == google.maps.GeocoderStatus.OK) 
 				{
 					//location of first address (latitude + longitude)
-					location1 = results[1];
+					location1 = results[0];
 					var geo = document.getElementById('geolo');
-					geo.innerHTML =	"Perto de: " + location1 + lat + lng;
+					geo.innerHTML =	"Perto de: " + location1.formatted_address;
 				} else 
 				{
 					alert("Geocode was not successful for the following reason: " + status);
@@ -37,7 +37,7 @@
       
     }
 	 var geo = document.getElementById('geolo');
-					geo.innerHTML =	"Perto de: " + location1.formatted_address + lat + lng;
+	geo.innerHTML =	"Perto de: " + location1.formatted_address + lat + lng;
 }	   
   
 
