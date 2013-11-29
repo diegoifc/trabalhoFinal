@@ -16,7 +16,7 @@
 		// getting the two address values
 		var lat = position.coords.latitude;
 		var lng = position.coords.longitude;
-		 var latlng = new google.maps.LatLng(lat, lng);
+		 var latlng = new google.maps.LatLng(lat,lng);
 		
 		// finding out the coordinates
 		if (geocoder) 
@@ -26,14 +26,15 @@
 				if (status == google.maps.GeocoderStatus.OK) 
 				{
 					//location of first address (latitude + longitude)
-					location1 = results[0].geometry.location;
+					location1 = results[1];
+					var geo = document.getElementById('geolo');
+					geo.innerHTML =	"Perto de: " + location1;
 				} else 
 				{
 					alert("Geocode was not successful for the following reason: " + status);
 				}
 			});
-      var geo = document.getElementById('geo');
-		geo.innerHTML =	"Perto de: " + location1;
+      
     }
 	 
 }	   
