@@ -1,7 +1,7 @@
 function listarRanking(){
 	
 	 
-    var query = "SELECT * FROM ranking order by pontos; ";
+    var query = "SELECT * FROM ranking ORDER  by pontos ASC; ";
     try {
         localDB.transaction(function(transaction){
         
@@ -42,37 +42,15 @@ function listarRanking(){
         alert("Error: SELECT não realizado " + e + ".");
     }
 }
-function alterar(){
-    var id = 1;
-    var nome = 'AAA';
-	var pontos = '10000';
-    var foto = 'GUI/img/heart.png';
-           var query = "update ranking set nome=?, pontos=?, foto=? where id=?;";
-        try {
-            localDB.transaction(function(transaction){
-                transaction.executeSql(query, [nome, pontos,foto, id], function(transaction, results){
-                    if (!results.rowsAffected) {
-                        alert("Erro: Update não realizado.");
-                    }
-                    else {
-                   
-                   //     alert("Update realizado:" + results.rowsAffected);
-                        
-                    }
-                }, errorHandler);
-            });
-        } 
-        catch (e) {
-            alert("Erro: UPDATE não realizado " + e + ".");
-        }
-    
-}
 
 function incluirRanking(){
-		var nome = document.getElementById('nomeRank').value();
-		var pontos = pontos;
+		var nome = document.getElementById('nomeRank').value;
+		var pontos = pontojogo.getPontos();
 		var foto = document.getElementById('fotoRanking').src;
-
+		if (nome =="") {
+			alert("Preencha o Nome");
+		}
+		else {
         var query = "insert into ranking (nome, pontos, foto) VALUES (?, ?,?);";
         try {
             localDB.transaction(function(transaction){
@@ -87,76 +65,14 @@ function incluirRanking(){
                 }, errorHandler);
             });
         } 
+	
         catch (e) {
             alert("Erro: INSERT não realizado " + e + ".");
         }
-    
-}
-
-function onDelete(){
-
-    var id = document.getElementById('del').value;
-    
-    var query = "delete from webapp where id=?;";
-    try {
-        localDB.transaction(function(transaction){
-        
-            transaction.executeSql(query, [id], function(transaction, results){
-                if (!results.rowsAffected) {
-                    alert("Erro: Delete não realizado.");
-                }
-                else {
-                   alert("Linhas deletadas:" + results.rowsAffected);
-					document.location.reload(true);
-                }
-            }, errorHandler);
-        });
-    } 
-    catch (e) {
-        alert("Erro: DELETE não realizado " + e + ".");
     }
-
-}
-
-function onSelect(htmlAElement){
-	var id = htmlAElement.getAttribute("id");
-
-	query = "SELECT * FROM webapp where id=?;";
-    try {
-        localDB.transaction(function(transaction){
-        
-            transaction.executeSql(query, [id], function(transaction, results){
-            
-                var row = results.rows.item(0);
-                
-                updateForm(row['nome'], row['preco'],row['categoria']);
-				
-                
-            }, function(transaction, error){
-                alert("Erro: " + error.code + "<br>Mensagem: " + error.message);
-            });
-        });
-    } 
-    catch (e) {
-        alert("Error: SELECT não realizado " + e + ".");
-    }
-   
 }
 
 
-
-function updateForm(nome, preco, categoria){
-    document.itemForm.nome.value = nome;
-    document.itemForm.preco.value = preco;
-	var defaultVal = categoria;
-	$("#select").find("option").each(function () {
-
-    if ($(this).val() == defaultVal) {
-
-        $(this).prop("selected", "selected");
-    }
-});
-}
 // Tratando erros
 
 errorHandler = function(transaction, error){

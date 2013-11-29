@@ -2,7 +2,8 @@
 <html>
        <head>      
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-			<title> Jogo da memória - HTML5</title>
+			<title> Memória em  Teste</title>
+			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 			<script type="text/javascript" src="js/cordova-2.9.0.js" ></script> 
 			<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 			<script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>			
@@ -11,15 +12,16 @@
 			<script type="text/javascript" src="MODEL/camera.js" ></script>
 			<script type="text/javascript" src="MODEL/funcoes.js" ></script>
 			<script type="text/javascript" src="MODEL/funcbd.js" ></script>
+			<script type="text/javascript" src="MODEL/geo.js" ></script>
 			<link rel="stylesheet" href="js/jquery.mobile-1.3.2.min.css" />
 	   </head>
-       <body onLoad="carregar();load();onInit()"> 
+       <body onLoad="load();onInit()"> 
 		  <div data-role="page" id="home" data-inset="false" >
 				<div data-role="header" align='center'>
-					<p>Jogo da Memória HTML 5</p>
+					<p>Memória em  Teste</p>
 				</div>
 				<div data-role="content">
-					 <a href="#jogar" data-role="button" >Jogar</a>
+					 <a href="#jogar" onclick="carregar()" data-role="button" >Jogar</a>
 					 <a href="#ranking" data-role="button" reloadPage="true" onclick="listarRanking();">Ranking</a>
 				</div>
 				<div data-role="footer" id="rodape" align='center'>
@@ -32,7 +34,7 @@
 				</div>
 				<div data-role="content">
 						<div>
-							<h2>Foto:</h2><img data-inline = "true" id ="fotoRanking"src="GUI/img/heart.png"></br>
+							<img data-inline = "true" id ="fotoRanking"src="GUI/img/heart.png"></br>
 							<button data-inline = "true" onclick="appCam.capturarFoto();">Nova Foto</button>
 							<button data-inline = "true" onclick="appCam.buscarfoto();">Buscar da Biblioteca</button>
 						</div>
@@ -40,9 +42,9 @@
 						<a onclick="incluirRanking()" data-role="button" >Salvar</a>	
 				</div>
 		  </div>
-		  <div data-role="page" id="jogar" data-inset="false" >
+		  <div data-role="page" id="jogar" data-inset="false" data-add-back-btn="true">
 				<div data-role="header" align='center'>
-					<p>Jogo da Memória</p>
+					<p>Memória em  Teste</p>
 				</div>
 				<div data-role="content">
 					<div >
@@ -53,9 +55,10 @@
 				</div>
 				<div data-role="footer" id="rodape" align='center'>
 					<p id="info"></p>
+					<p id ="geo"></p>
 				</div>
 		  </div>
-		  <div data-role="page" id="ranking" data-inset="false" data-add-back-btn="true" >
+		  <div data-role="page" id="ranking" data-inset="false" data-add-back-btn="false" >
 				<div data-role="header" align='center'>
 					<p>Maiores Pontuadores</p>
 				</div>

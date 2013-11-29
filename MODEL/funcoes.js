@@ -64,6 +64,8 @@ function meuDispositivo(){
 					appCam.setTipoBusca(navigator.camera.PictureSourceType);
 					appCam.setDestino(navigator.camera.DestinationType);
 					
+					appGeo = new objtGeo();
+					
 					
 					
 	}

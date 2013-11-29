@@ -1,3 +1,17 @@
+function meujogo() {
+	var pontos;
+	
+	
+	this.getPontos=function(){
+        return this.pontos;
+    };
+	this.setPontos=function(outroPonto){
+        this.pontos = outroPonto;
+    };
+
+
+}
+
 //variáveis para definir o tamanho da tag canvas
 	 var jogo_width;
 	 var jogo_height;
@@ -169,7 +183,7 @@ function escolha(ev) {
                     if (carta.info==deck[primeira_carta].info) {
                                   combinacao = true;
 								  fim++;
-                                  pontos= pontos + 10;
+                                  pontos= pontos + 1000;
                               
                                   if (fim>= .5*deck.length) {
 									tid = setTimeout(function(){
@@ -191,7 +205,7 @@ function escolha(ev) {
 											   canvas1.addEventListener('click',salvar,false);
                                                }; 
 											    return; 
-                                   }, 1000) }                
+                                   }, 1500) }                
                     }            else {
                                   combinacao = false;
                     }
@@ -220,6 +234,8 @@ var out;
                     my = ev.offsetY;
        }
 	 if ((mx>=tx) && (my>=ty) && (mx <=(tx+zx)) &&  (my <=(ty+zy))) {
+	  pontojogo = new meujogo();
+	  pontojogo.setPontos(pontos);
 		$.mobile.changePage('#salvar', {transition: 'pop', role: 'dialog'});
 	 }
 }
@@ -231,7 +247,7 @@ function vira_carta() {
     //vira a carta pra baixo
     if (!combinacao) {
 			if (pontos >0){
-			pontos = pontos - 2;}
+			pontos = pontos - 200;}
 			this.background( function(){
 			for (i=0;i<deck.length;i++){
 			if (deck[i].removida != true){
