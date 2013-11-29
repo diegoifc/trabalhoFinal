@@ -1,6 +1,6 @@
 function listarRanking(){
 	
-	  $.mobile.changePage("#ranking", { transition: "slide"});
+	 
     var query = "SELECT * FROM ranking order by pontos; ";
     try {
         localDB.transaction(function(transaction){
@@ -69,12 +69,14 @@ function alterar(){
 }
 
 function incluirRanking(){
-    
+		var nome = document.getElementById('nomeRank').value();
+		var pontos = pontos;
+		var foto = document.getElementById('fotoRanking').src;
 
         var query = "insert into ranking (nome, pontos, foto) VALUES (?, ?,?);";
         try {
             localDB.transaction(function(transaction){
-                transaction.executeSql(query, ['EEE','6000','GUI/img/heart.png'], function(transaction, results){
+                transaction.executeSql(query, [nome,pontos,foto], function(transaction, results){
                     if (!results.rowsAffected) {
                         alert("Erro: Inserção não realizada");
                     }
