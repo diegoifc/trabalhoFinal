@@ -26,9 +26,10 @@
 				if (status == google.maps.GeocoderStatus.OK) 
 				{
 					//location of first address (latitude + longitude)
-					location1 = results[0];
+					rua = results[0].address_components[1].short_name;
+					cidade = results[0].address_components[2].short_name
 					var geo = document.getElementById('geolo');
-					geo.innerHTML =	"Perto de: " + location1.formatted_address;
+					geo.innerHTML =	"Perto de(a): " + rua + " de " + cidade ;
 				} else 
 				{
 					alert("Geocode was not successful for the following reason: " + status);
@@ -36,8 +37,7 @@
 			});
       
     }
-	 var geo = document.getElementById('geolo');
-	geo.innerHTML =	"Perto de: " + location1.formatted_address + lat + lng;
+	
 }	   
   
 
