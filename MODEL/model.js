@@ -205,7 +205,7 @@ function escolha(ev) {
 											   contexto.fillText("Parabéns",jogo_width*0.01,jogo_height*0.075);
                                                out = "Você terminou em "  + String(seconds) + " segundos.";
                                                contexto.fillText(out,jogo_width*0.01,jogo_height*0.15);
-											   out2 = "Sua pontuação total foi: " + String(pontos);
+											   out2 = "Sua pontuação total foi: " + String(pontos) + " Pontos";
 											   contexto.fillText(out2,jogo_width*0.01,jogo_height*0.225);
 												var botao = new Image();
 												botao.src = 'GUI/img/botao2.png';
@@ -294,13 +294,9 @@ function vira_carta() {
 			this.background( function(){
 			for (i=0;i<deck.length;i++){
 			if (deck[i].removida != true){
-				
-				deck[i].draw();
-				
-	
-            }
-			
-			}
+			deck[i].draw();
+		    }
+		}
 		}	);	
 			 
     } else {
@@ -308,14 +304,10 @@ function vira_carta() {
 			for (i=0;i<deck.length;i++){
 			if (deck[i].removida != true){
 			if (deck[i]!=deck[primeira_carta] && deck[i]!=deck[segunda_carta])
-			
 			{
 				deck[i].draw();
-			
 			}
-			 
-			
-			} }
+		} }
 			deck[segunda_carta].sx = -1;
             deck[primeira_carta].sx = -1;
 			deck[segunda_carta].removida = true;
@@ -329,17 +321,11 @@ function vira_carta() {
 
 function carregar(){
 		
-		 canvas1 = document.getElementById('jogo');
+		canvas1 = document.getElementById('jogo');
 		
 		canvas1.width = jogo_width;
 		canvas1.height= jogo_height;
 		this.background(function(){
-		
-        
-		
-		
-        
-       
 		canvas1.addEventListener('click',escolha,false);
         formar_cartas();
         embaralhar();            
@@ -355,7 +341,7 @@ function background(callback){
 				contexto.drawImage(bg, 0, 0,jogo_width,jogo_height);
 				contexto.font="bold 15pt sans-serif";
 				contexto.fillText("Escolha duas cartas",jogo_width*0.03,jogo_height*0.08);
-				contexto.fillText("Pares encontrados: " + String(pontos),jogo_width*0.03,jogo_height*0.9); 
+				contexto.fillText("Pontuação: " + String(pontos) + " Pontos",jogo_width*0.03,jogo_height*0.9); 
 				callback && callback();
 			}
 	
