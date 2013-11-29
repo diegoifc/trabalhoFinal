@@ -65,6 +65,7 @@ function meuDispositivo(){
 					appCam.setDestino(navigator.camera.DestinationType);
 					
 					appGeo = new objtGeo();
+					appGeo.getGeo();
 					
 					
 					

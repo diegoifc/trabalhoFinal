@@ -9,19 +9,19 @@
 	
 
     this.onGeoSuccess = function(position) {
-	    
-	 var geocoder;
+	    var geocoder;
 
 	geocoder = new google.maps.Geocoder(); // creating a new geocode object
 		
 		// getting the two address values
 		var lat = position.coords.latitude;
 		var lng = position.coords.longitude;
+		 var latlng = new google.maps.LatLng(lat, lng);
 		
 		// finding out the coordinates
 		if (geocoder) 
 		{
-			geocoder.geocode( { 'latlng': lat,lng }, function(results, status) 
+		 geocoder.geocode({ 'latLng': latlng }, function (results, status)
 			{
 				if (status == google.maps.GeocoderStatus.OK) 
 				{
@@ -35,6 +35,7 @@
       var geo = document.getElementById('geo');
 		geo.innerHTML =	"Perto de: " + location1;
     }
+	 
 }	   
   
 
