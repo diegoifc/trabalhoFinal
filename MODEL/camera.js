@@ -23,31 +23,25 @@
 	   
     this.onPhotoURISuccess =function(imageURI) {
       
-      var 	a = document.createElement('img');
+      var 	a = document.getElementById('fotoRanking');
 			a.setAttribute('class', 'imagens');
 			a.setAttribute('style', 'width:80px;height:80px;margin-left:2px;');
 			a.src = imageURI;
 			
-			document.getElementById('quadrofotos').appendChild(a);
+		
 
    
     }
 
     
-    this.buscarFoto=function () {
+    this.capturarFoto=function () {
 		navigator.camera.getPicture(this.onPhotoDataSuccess,  this.onFail, { quality: 50,
         destinationType: this.destino.DATA_URL });
 		
     }
 
-    
-    this.capturePhotoEdit=function () {
-        navigator.camera.getPicture(this.onPhotoDataSuccess,  this.onFail, { quality: 20, allowEdit: true,
-        destinationType: this.destino.DATA_URL });
-    }
 
-   
-    this.getPhoto=function() {
+    this.buscarfoto=function() {
 		tipo = this.tipoBusca.PHOTOLIBRARY;
 	    navigator.camera.getPicture(this.onPhotoURISuccess, this.onFail, { quality: 50, 
         destinationType: this.destino.FILE_URI,
