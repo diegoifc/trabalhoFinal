@@ -37,7 +37,7 @@
       
     }
 	 var geo = document.getElementById('geolo');
-					geo.innerHTML =	"Perto de: " + location1 + lat + lng;
+					geo.innerHTML =	"Perto de: " + location1.formatted_address + lat + lng;
 }	   
   
 
