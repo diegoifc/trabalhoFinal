@@ -1,7 +1,7 @@
 function listarRanking(){
 	
 	 
-    var query = "SELECT * FROM ranking ORDER  by pontos ASC; ";
+    var query = "SELECT * FROM ranking ORDER  by pontos DESC; ";
     try {
         localDB.transaction(function(transaction){
         
@@ -45,7 +45,7 @@ function listarRanking(){
 
 function incluirRanking(){
 		var nome = document.getElementById('nomeRank').value;
-		var pontos = pontojogo.getPontos();
+		var pontos = parseInt(pontojogo.getPontos());
 		var foto = document.getElementById('fotoRanking').src;
 		if (nome =="") {
 			alert("Preencha o Nome");
@@ -59,7 +59,8 @@ function incluirRanking(){
                         alert("Erro: Inserção não realizada");
                     }
                     else {
-                       alert("Inserção realizada, linha id: " + results.insertId);
+                       alert("Dados Salvo com Sucesso!");
+					  $("#salvar").dialog('close');
 						
                     }
                 }, errorHandler);
@@ -67,7 +68,7 @@ function incluirRanking(){
         } 
 	
         catch (e) {
-            alert("Erro: INSERT não realizado " + e + ".");
+            alert("Erro: Não foi possível Salvar: Erro de Banco de Dados " + e + ".");
         }
     }
 }

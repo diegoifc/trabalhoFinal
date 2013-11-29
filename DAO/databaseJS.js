@@ -46,7 +46,7 @@ function deleteTables(){
     }
 }
 function createTables(){
-    var query = 'CREATE TABLE IF NOT EXISTS ranking(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL, pontos VARCHAR NOT NULL, foto VARCHAR NOT NULL);'
+    var query = 'CREATE TABLE IF NOT EXISTS ranking(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL, pontos INTEGER NOT NULL, foto VARCHAR NOT NULL);'
 				
     try {
         localDB.transaction(function(transaction){
@@ -56,11 +56,11 @@ function createTables(){
 		  var len = results.rows.length;
 		  if (len==0){
 				
-					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("AAA","10000","GUI/img/heart.png")');
-					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("BBB","7000","GUI/img/heart.png")');
-					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("CCC","8000","GUI/img/heart.png")');
-					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("DDD","7000","GUI/img/heart.png")');
-					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("EEE","6000","GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("AAA",8000,"GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("BBB",7000,"GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("CCC",6000,"GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("DDD",5000,"GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("EEE",4000,"GUI/img/heart.png")');
 			
 			}
 		}, this.errorHandler)})

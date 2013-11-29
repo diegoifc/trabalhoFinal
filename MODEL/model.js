@@ -190,22 +190,38 @@ function escolha(ev) {
                                                var now = new Date();
                                                var nt = Number(now.getTime());
                                                var seconds = Math.floor(.5+(nt-iniciar_time)/1000);
-                                              var bg = new Image();
+                                              if (seconds <=15) {
+												pontos = pontos + 3000;
+											  } else if (seconds <= 30) {
+												pontos = pontos + 2000;
+											  } else if  (seconds <=60){
+												pontos = pontos + 1000;
+											  }
+											  var bg = new Image();
 											   bg.src = 'GUI/img/bg01.jpg'; 
 											   bg.onload = function() {
                                                contexto.drawImage(bg, 0, 0);
 											   contexto.fillStyle=cor_carta;
-                                               out = "Parabéns, você encontrou as combinações em "  + String(seconds) + " segundos.";
-                                               contexto.fillText(out,10,30);
+											   contexto.fillText("Parabéns",jogo_width*0.01,jogo_height*0.075);
+                                               out = "Você terminou em "  + String(seconds) + " segundos.";
+                                               contexto.fillText(out,jogo_width*0.01,jogo_height*0.15);
+											   out2 = "Sua pontuação total foi: " + String(pontos);
+											   contexto.fillText(out2,jogo_width*0.01,jogo_height*0.225);
 												var botao = new Image();
 												botao.src = 'GUI/img/botao2.png';
 												botao.onload = function() {
-                                               contexto.drawImage(botao, jogo_width*0.05, jogo_height*0.8, jogo_width*0.35,jogo_height*0.125);
+												contexto.drawImage(botao, jogo_width*0.01, jogo_height*0.8, jogo_width*0.30,jogo_height*0.125);
+											   }
+											   var botao2 = new Image();
+												botao2.src = 'GUI/img/botao3.png';
+												botao2.onload = function() {
+												contexto.drawImage(botao2, jogo_width*0.38, jogo_height*0.8, jogo_width*0.30,jogo_height*0.125);
 											   }
 											   canvas1.addEventListener('click',salvar,false);
+											   canvas1.addEventListener('click',novoJogo,false);
                                                }; 
 											    return; 
-                                   }, 1500) }                
+                                   }, 1100) }                
                     }            else {
                                   combinacao = false;
                     }
@@ -220,9 +236,9 @@ var out;
    
     var mx = 0;
     var my = 0;
-	var tx = jogo_width*0.05;
+	var tx = jogo_width*0.01;
 	var ty = jogo_height*0.8;
-	var zx = jogo_width*0.35;
+	var zx = jogo_width*0.30;
 	var zy = jogo_height*0.125;
     
   
@@ -235,11 +251,38 @@ var out;
        }
 	 if ((mx>=tx) && (my>=ty) && (mx <=(tx+zx)) &&  (my <=(ty+zy))) {
 	  pontojogo = new meujogo();
-	  pontojogo.setPontos(pontos);
+	  pontojogo.setPontos(String(pontos));
 		$.mobile.changePage('#salvar', {transition: 'pop', role: 'dialog'});
 	 }
 }
-
+function novoJogo(ev) {
+var out;
+   
+    var mx = 0;
+    var my = 0;
+	var tx = jogo_width*0.38;
+	var ty = jogo_height*0.8;
+	var zx = jogo_width*0.30;
+	var zy = jogo_height*0.125;
+    
+  
+    if ( ev.layerX ||  ev.layerX == 0) { // Firefox
+                    mx= ev.layerX;
+                    my = ev.layerY;
+       } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+                    mx = ev.offsetX;
+                    my = ev.offsetY;
+       }
+	 if ((mx>=tx) && (my>=ty) && (mx <=(tx+zx)) &&  (my <=(ty+zy))) {
+	  pontojogo = new meujogo();
+	  pontojogo.setPontos(String(pontos));
+		$.mobile.changePage('#jogar', {transition: 'pop', role: 'dialog'});
+		pontos = 0;
+		carregar();
+		appGeo.getGeo();
+		
+	 }
+}
 
 function vira_carta() {
     var card;
