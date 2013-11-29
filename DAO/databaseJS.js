@@ -46,12 +46,25 @@ function deleteTables(){
     }
 }
 function createTables(){
-    var query = 'CREATE TABLE IF NOT EXISTS ranking(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL, pontos VARCHAR NOT NULL, foto VARCHAR NOT NULL);';
+    var query = 'CREATE TABLE IF NOT EXISTS ranking(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nome VARCHAR NOT NULL, pontos VARCHAR NOT NULL, foto VARCHAR NOT NULL);'
+				
     try {
         localDB.transaction(function(transaction){
-            transaction.executeSql(query, [], this.nullDataHandler, this.errorHandler);
-          
-        });
+            transaction.executeSql(query, [], nullDataHandler, errorHandler);
+			transaction.executeSql('SELECT * FROM ranking',[],function (transaction, results)
+	     { 
+		  var len = results.rows.length;
+		  if (len==0){
+				
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("AAA","10000","GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("BBB","7000","GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("CCC","8000","GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("DDD","7000","GUI/img/heart.png")');
+					transaction.executeSql('INSERT INTO ranking(nome,pontos,foto)VALUES ("EEE","6000","GUI/img/heart.png")');
+			
+			}
+		}, this.errorHandler)})
+        
     } 
     catch (e) {
         alert("Erro: Data base 'ranking' não criada " + e + ".");

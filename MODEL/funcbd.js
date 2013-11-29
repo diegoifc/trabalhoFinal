@@ -1,5 +1,6 @@
-function listarProdutos(){
-
+function listarRanking(){
+	
+	  $.mobile.changePage("#ranking", { transition: "slide"});
     var query = "SELECT * FROM ranking order by pontos; ";
     try {
         localDB.transaction(function(transaction){
@@ -11,12 +12,7 @@ function listarProdutos(){
                     var li = document.createElement("li");
 					li.setAttribute("id", row['id']);
                     
-                  /*   
-					var a = document.createElement('a');
-						a.setAttribute('href', '#');
-						a.setAttribute('data-rel', 'popup');
-						a.setAttribute("id", row['id']);
-						a.setAttribute('data-position-to', 'window'); */
+              
 						
 						var h2 = document.createElement('h2');
 							h2.appendChild(document.createTextNode(row['nome']));
@@ -31,7 +27,7 @@ function listarProdutos(){
 						li.appendChild(h2);
 						li.appendChild(p);
 					              
-                   // li.appendChild(a);
+     
 					
                     
                     document.getElementById("listagem").appendChild(li);
@@ -72,7 +68,7 @@ function alterar(){
     
 }
 
-function incluir(){
+function incluirRanking(){
     
 
         var query = "insert into ranking (nome, pontos, foto) VALUES (?, ?,?);";
@@ -145,12 +141,7 @@ function onSelect(htmlAElement){
    
 }
 
-function preencher(htmlAElement){
-	var id = htmlAElement.getAttribute("id");
-	document.getElementById('del').value = id
 
-	
-}
 
 function updateForm(nome, preco, categoria){
     document.itemForm.nome.value = nome;

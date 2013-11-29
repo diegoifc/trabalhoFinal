@@ -38,6 +38,7 @@
        var margin;
        // Define o tamanho da carta
 	   var pontos = 0;
+	   var fim = 0;
        var carta_width;
 	   var carta_height;
 	   
@@ -47,11 +48,11 @@
        var count = 0;
        // Definimos os pares de imagens
        var pares = [
-             ["GUI/1.png","GUI/1.png"],
-             ["GUI/2.png","GUI/2.png"],
-             ["GUI/3.png","GUI/3.png"],
-             ["GUI/4.png","GUI/4.png"],        
-             ["GUI/5.png","GUI/5.png"]
+             ["GUI/img/1.png","GUI/img/1.png"],
+             ["GUI/img/2.png","GUI/img/2.png"],
+             ["GUI/img/3.png","GUI/img/3.png"],
+             ["GUI/img/4.png","GUI/img/4.png"],        
+             ["GUI/img/5.png","GUI/img/5.png"]
        ]
 function carta(sx,sy,swidth,sheight, img, info) {
      this.sx = sx;
@@ -61,6 +62,7 @@ function carta(sx,sy,swidth,sheight, img, info) {
      this.info = info; //info será usada no array na formação das cartas
      this.img = img;
      this.draw = desenha_verso;
+	 this.removida = false;
 
 }
 function desenha_verso() {
@@ -71,11 +73,11 @@ function desenha_verso() {
 
 
 function formar_cartas() {
-		carta_width = jogo_width*0.1;
-		carta_height = jogo_width*0.13;
-		firstsx = jogo_width*0.04;
-		firstsy = jogo_width*0.06;
-		margin = jogo_width*0.04;
+		carta_width = jogo_width*0.15;
+		carta_height = jogo_height*0.325;
+		firstsx = jogo_width*0.03;
+		firstsy = jogo_height*0.125;
+		margin = jogo_width*0.03;
 		
 	          var i; // variável para o for            
               var carta_a; // variável para armazenar a primeira carta
@@ -166,33 +168,30 @@ function escolha(ev) {
                     // verifica se elas são pares combinados
                     if (carta.info==deck[primeira_carta].info) {
                                   combinacao = true;
-                                  pontos++;
-                                   contexto.fillStyle= 'rgba(0,0,0,0.0)';
-                                  contexto.fillRect(10,340,900,100); 
-                                  contexto.fillStyle=cor_carta;
-                                  contexto.fillText("Pares encontrados: " + String(pontos), 10, 380);
-                                  if (pontos>= .5*deck.length) {
+								  fim++;
+                                  pontos= pontos + 10;
+                              
+                                  if (fim>= .5*deck.length) {
+									tid = setTimeout(function(){
                                                var now = new Date();
                                                var nt = Number(now.getTime());
                                                var seconds = Math.floor(.5+(nt-iniciar_time)/1000);
-                                            //  contexto.fillStyle= cor_tabela;
-                                              // contexto.fillRect(0,0,900,400);
-											   var bg = new Image();
+                                              var bg = new Image();
 											   bg.src = 'GUI/img/bg01.jpg'; 
 											   bg.onload = function() {
                                                contexto.drawImage(bg, 0, 0);
 											   contexto.fillStyle=cor_carta;
                                                out = "Parabéns, você encontrou as combinações em "  + String(seconds) + " segundos.";
-                                               contexto.fillText(out,10,100);
+                                               contexto.fillText(out,10,30);
 												var botao = new Image();
-												botao.src = 'GUI/img/botao.png';
+												botao.src = 'GUI/img/botao2.png';
 												botao.onload = function() {
-                                               contexto.drawImage(botao, 5, 317, 350, 50);
-											   contexto.fillText("Salvar Pontuação",70,350);}
+                                               contexto.drawImage(botao, jogo_width*0.05, jogo_height*0.8, jogo_width*0.35,jogo_height*0.125);
+											   }
 											   canvas1.addEventListener('click',salvar,false);
                                                }; 
 											    return; 
-                                    }                
+                                   }, 1000) }                
                     }            else {
                                   combinacao = false;
                     }
@@ -207,6 +206,10 @@ var out;
    
     var mx = 0;
     var my = 0;
+	var tx = jogo_width*0.05;
+	var ty = jogo_height*0.8;
+	var zx = jogo_width*0.35;
+	var zy = jogo_height*0.125;
     
   
     if ( ev.layerX ||  ev.layerX == 0) { // Firefox
@@ -216,7 +219,7 @@ var out;
                     mx = ev.offsetX;
                     my = ev.offsetY;
        }
-	 if (mx>=5 && mx <=350) {
+	 if ((mx>=tx) && (my>=ty) && (mx <=(tx+zx)) &&  (my <=(ty+zy))) {
 		$.mobile.changePage('#salvar', {transition: 'pop', role: 'dialog'});
 	 }
 }
@@ -224,51 +227,77 @@ var out;
 
 function vira_carta() {
     var card;
-    //se a formar uma combinação desenha um
-    //retângulo com a cor do fundo, se não formar,
-    //vira a carta com a fazer para baixo
+    //se a formar uma combinação redesenha a tabela, se não formar,
+    //vira a carta pra baixo
     if (!combinacao) {
-             deck[primeira_carta].draw();
-             deck[segunda_carta].draw();
+			if (pontos >0){
+			pontos = pontos - 2;}
+			this.background( function(){
+			for (i=0;i<deck.length;i++){
+			if (deck[i].removida != true){
+				
+				deck[i].draw();
+				
+	
+            }
+			
+			}
+		}	);	
 			 
     } else {
-	
-	
-             contexto.fillStyle = cor_tabela;
-             contexto.fillRect(deck[segunda_carta].sx,
-                          deck[segunda_carta].sy,
-                          deck[segunda_carta].swidth,
-                          deck[segunda_carta].sheight);
-             contexto.fillRect(deck[primeira_carta].sx,
-                          deck[primeira_carta].sy,
-                          deck[primeira_carta].swidth,
-                          deck[primeira_carta].sheight);
-             deck[segunda_carta].sx = -1;
-             deck[primeira_carta].sx = -1;
+			 this.background( function(){
+			for (i=0;i<deck.length;i++){
+			if (deck[i].removida != true){
+			if (deck[i]!=deck[primeira_carta] && deck[i]!=deck[segunda_carta])
+			
+			{
+				deck[i].draw();
+			
+			}
+			 
+			
+			} }
+			deck[segunda_carta].sx = -1;
+            deck[primeira_carta].sx = -1;
+			deck[segunda_carta].removida = true;
+            deck[primeira_carta].removida = true;
+			
+	}	);
+          
     }
-	 canvas1.addEventListener('click',escolha,false);
+	canvas1.addEventListener('click',escolha,false);   
 }
 
 function carregar(){
-		var bg = new Image();
+		
 		 canvas1 = document.getElementById('jogo');
-		 
+		
 		canvas1.width = jogo_width;
 		canvas1.height= jogo_height;
-        contexto = document.getElementById('jogo').getContext('2d');
-		bg.src = 'GUI/img/bg01.jpg'; 
-		bg.onload = function() {
-				contexto.drawImage(bg, 0, 0,jogo_width,jogo_height);
-			
+		this.background(function(){
+		
+        
 		
 		
         
        
 		canvas1.addEventListener('click',escolha,false);
         formar_cartas();
-        embaralhar();            contexto.font="bold 20pt sans-serif";
-		contexto.fillText("Escolha duas cartas e faça combinações",30,30);
-        contexto.fillText("Pares encontrados: 0",10,380); 
+        embaralhar();            
         iniciar_time = new Date();
-        iniciar_time = Number(iniciar_time.getTime());};
+        iniciar_time = Number(iniciar_time.getTime());});
     }
+function background(callback){
+	var bg = new Image();
+	contexto = document.getElementById('jogo').getContext('2d');
+		bg.src = 'GUI/img/bg01.jpg'; 
+		bg.onload = function() {
+				contexto.fillStyle=cor_carta;
+				contexto.drawImage(bg, 0, 0,jogo_width,jogo_height);
+				contexto.font="bold 15pt sans-serif";
+				contexto.fillText("Escolha duas cartas",jogo_width*0.03,jogo_height*0.08);
+				contexto.fillText("Pares encontrados: " + String(pontos),jogo_width*0.03,jogo_height*0.9); 
+				callback && callback();
+			}
+	
+}

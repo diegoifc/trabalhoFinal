@@ -12,7 +12,7 @@
 
     this.onPhotoDataSuccess=function(imageData) {
 			
-      var 	a = document.createElement('img');
+      var 	a = document.getElementById('fotoRanking');
 			a.setAttribute('class', 'imagens');
 			a.setAttribute('style', 'width:80px;height:80px;margin-left:2px;');
 			a.src = 'data:image/jpeg;base64,' + imageData;
@@ -47,16 +47,9 @@
     }
 
    
-    this.getPhoto=function(fonte) {
-	
-		if (fonte == 'Biblioteca'){
-			tipo = this.tipoBusca.PHOTOLIBRARY;
-			}
-			else {
-			tipo = this.tipoBusca.SAVEDPHOTOALBUM;
-			}
-
-        navigator.camera.getPicture(this.onPhotoURISuccess, this.onFail, { quality: 50, 
+    this.getPhoto=function() {
+		tipo = this.tipoBusca.PHOTOLIBRARY;
+	    navigator.camera.getPicture(this.onPhotoURISuccess, this.onFail, { quality: 50, 
         destinationType: this.destino.FILE_URI,
         sourceType: tipo });
     }
